@@ -15,9 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from scope_flow.views import home_page
 
 urlpatterns = [
-    path('scope-flow/', include('scope_flow.urls')),
-    path('admin/', admin.site.urls),
+    path("", home_page, name="home-page"),
 ]
+
