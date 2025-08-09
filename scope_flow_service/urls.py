@@ -18,6 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('scope-flow/', include('scope_flow.urls')),
+    path('', include('scope_flow.urls')),
     path('admin/', admin.site.urls),
 ]
