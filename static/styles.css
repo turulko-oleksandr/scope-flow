@@ -1,0 +1,23 @@
+a {
+    color: black;
+    text-decoration: none;
+}
+
+main{
+    display: block;
+}
+
+#layout {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* nav & main */
+    grid-template-rows: auto 1fr; /* header & content */
+    height: 100vh;
+}
+
+#sidebar{
+    display: block;
+    background-color: lightblue;
+    border-right: gray 1px solid;
+    height: 100vh;
+}
+
