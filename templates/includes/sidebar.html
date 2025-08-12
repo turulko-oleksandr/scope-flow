@@ -1,4 +1,12 @@
-<ul>
-  <li><a href="/">Home</a></li>
-  <li><a href={% url "worker-list" %}>Workers</a></li>
-</ul>
+
+<nav class="sidebar">
+    <ul>
+      <li>
+        <h1 class="app_name">
+          <a href="/">Scope Flow</a>
+        </h1>
+      </li>
+      <li><a href={% url "worker-list" %}>Workers</a></li>
+      <li><a href={% url "task-list" %}>Tasks</a></li>
+    </ul>
+</nav>

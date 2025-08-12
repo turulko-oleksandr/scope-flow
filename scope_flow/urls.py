@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from scope_flow.views import home_page, WorkerListView
+from scope_flow.views import home_page, WorkerListView, TaskListView
 
 urlpatterns = [
     path("", home_page, name="home-page"),
     path("workers/", WorkerListView.as_view(), name="worker-list"),
+    path("tasks/", TaskListView.as_view(), name="task-list"),
 ]
 
