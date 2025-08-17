@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scope_flow',
+    'django_bootstrap_icons',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,4 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'scope_flow.Worker'
+LOGIN_REDIRECT_URL = '/'

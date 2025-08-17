@@ -1,18 +1,26 @@
-
 <ul class="sidebar-nav list-group">
-
-  <li class="list-group-item">
-    <h1 class="app_name">
-      <a href="/">Scope Flow</a>
-    </h1>
-  </li>
-  <li class="list-group-item"><a class="btn btn-light" href={% url "worker-list" %}>Workers</a></li>
-  <li class="list-group-item"><a class="btn btn-light" href={% url "task-list" %}>Tasks</a></li>
-
   {% if user.is_authenticated %}
-    <li class="list-group-item">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
-    <li class="list-group-item"><a class="btn btn-danger" href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+    <li class="list-group-item">
+      <h1 class="app_name">
+        <a href="/">Scope Flow</a>
+      </h1>
+    </li>
+    <li class="list-group-item"><h3>User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></h3></li>
+    <li class="list-group-item btn btn-light"><a class="link" href={% url "worker-list" %}>Workers</a></li>
+    <li class="list-group-item btn btn-light"><a class="link" href={% url "task-list" %}>Tasks</a></li>
+    <li class="list-group-item"><a class="btn btn-danger" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+    </li>
   {% else %}
-    <li class="list-group-item"><a class="btn btn-primary" href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+
+    </li>
+    <li class="list-group-item">
+      <h1 class="app_name">
+        <a href="/">Scope Flow</a>
+      </h1>
+    </li>
+    <li class="list-group-item"><a class="btn btn-light" href={% url "worker-list" %}>Workers</a></li>
+    <li class="list-group-item"><a class="btn btn-light" href={% url "task-list" %}>Tasks</a></li>
+    <li class="list-group-item"><a class="btn btn-primary" href="{% url 'login' %}?next={{ request.path }}">Login</a>
+    </li>
   {% endif %}
 </ul>
