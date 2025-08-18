@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from scope_flow.views import home_page, WorkerListView, TaskListView, TaskDetailView
+from scope_flow.views import home_page, WorkerListView, TaskListView, TaskUpdateView, TaskDeleteView
 
 urlpatterns = [
     path("", home_page, name="home-page"),
     path("workers/", WorkerListView.as_view(), name="worker-list"),
     path("tasks/", TaskListView.as_view(), name="task-list"),
-    path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
+    path('tasks/<int:pk>/update/', TaskUpdateView.as_view(), name='task-update'),
+    path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
 ]
 
 app_name = "scope_flow"

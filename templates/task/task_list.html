@@ -1,15 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Task List
-  </h1>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-  <ol class="task_list">
-    {% for task in task_list %}
-      <li class="task_list_item">
-        {{ task.name }}
-      </li>
-    {% endfor %}
-  </ol>
+  <div class="container-fluid h-100 w-100">
+    <div class="row kanban-board bg-light g-4 min-vh-100">
+      {% for priority_name, tasks in grouped_tasks.items %}
+        <div class="col d-flex flex-column">
+          <div class="card shadow-sm flex-grow-1 h-100">
+            <div class="card-header text-center fw-bold bg-primary text-white">
+              {{ priority_name }}
+            </div>
+
+            <div class="card-body p-2 overflow-auto">
+              {% for task in tasks %}
+                <div class="card mb-3 border border-{{ task.priority|default:'secondary' }} shadow-sm">
+                  <div class="card-body p-2 d-flex justify-content-between align-items-center">
+                    <div class="card danger">
+                      <div class="card-header">
+
+                     <span class="badge
+                      {% if task.priority == 'Urgent' %} bg-danger
+                      {% elif task.priority == 'High' %} bg-warning text-dark
+                      {% elif task.priority == 'Medium' %} bg-info text-dark
+                      {% elif task.priority == 'Low' %} bg-success
+                      {% else %} bg-secondary {% endif %}">
+                      {{ task.priority }}
+                    </span>
+                      </div>
+                      <div class="card-body">
+
+                        <span class="ms-2">{{ task.name }}</span>
+                        <div class="list-group list-group-flush">
+                          <a href="{% url 'scope_flow:task-update' pk=task.pk %}"
+                             class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></a>
+                          <a href="{% url 'scope_flow:task-delete' pk=task.pk %}"
+                             class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              {% empty %}
+                <p class="text-muted text-center">There are no tasks.</p>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
 {% endblock %}
