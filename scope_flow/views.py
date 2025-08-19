@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView
 from django.db.models.functions import Coalesce, NullIf
@@ -28,14 +29,17 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task/task_form.html'
+    success_url = reverse_lazy('scope_flow:task-list')
 
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "task/task_form.html"
+    success_url = reverse_lazy('scope_flow:task-list')
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
-    template_name = "task/task_delete_confirm_form.html"
+    template_name = "task/task_confirm_delete.html"
+    success_url = reverse_lazy('scope_flow:task-list')

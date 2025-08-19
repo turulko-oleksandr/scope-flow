@@ -12,7 +12,27 @@
       </div>
 
       <div class="row justify-content-end">
-        <a class="btn fw-4 fs-3 btn-custom-font">+</a>
+        <a class="btn fw-4 fs-3 btn-custom-font" href="{% url "scope_flow:task-create" %}">+</a>
+
+        {% block delete_task_confirmation %}
+  <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this task?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <a id="confirmDeleteButton" href="#" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
       </div>
 
       <table class="table table-bordered table-hover mb-0">
@@ -83,4 +103,23 @@
 
     </div>
   </div>
+  {% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteLinks = document.querySelectorAll('.delete-link');
+        var confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+        deleteLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Запобігаємо стандартному переходу
+                var deleteUrl = this.getAttribute('data-delete-url');
+                confirmDeleteButton.href = deleteUrl;
+
+                var myModal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+                myModal.show();
+            });
+        });
+    });
+</script>
+{% endblock %}
 {% endblock %}
