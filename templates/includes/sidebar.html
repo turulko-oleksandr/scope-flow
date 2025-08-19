@@ -8,8 +8,11 @@
     <li class="list-group-item"><h3>User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></h3></li>
     <li class="list-group-item btn btn-light"><a class="link" href={% url "scope_flow:worker-list" %}>Workers</a></li>
     <li class="list-group-item btn btn-light"><a class="link" href={% url "scope_flow:task-list" %}>Tasks</a></li>
-    <li class="list-group-item"><a class="btn btn-danger" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
-    </li>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+
   {% else %}
     <li class="list-group-item">
       <h1 class="app_name">
