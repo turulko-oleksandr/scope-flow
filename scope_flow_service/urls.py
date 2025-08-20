@@ -18,9 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
 
+from scope_flow.views import WorkerCreateView
+
 urlpatterns = [
+    path('accounts/register/', WorkerCreateView.as_view(), name='register'),
     path('scope-flow/', include('scope_flow.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+
     path('', RedirectView.as_view(url='/scope-flow/', permanent=True))
 ]
