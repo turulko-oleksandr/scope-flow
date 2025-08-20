@@ -8,7 +8,7 @@
 
   <ul>
     {% for worker in worker_list %}
-      <li> {{ worker.username }} </li>
+      <li><a href={% url 'scope_flow:worker-detail' pk=worker.id %}>{{ worker.username }} </a></li>
     {% endfor %}
   </ul>
 {% endblock %}
