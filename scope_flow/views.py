@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import ListView, CreateView
 
-from .forms import TaskForm, WorkerCreateForm
+from .forms import TaskForm, WorkerCreateForm, WorkerUpdateForm
 from scope_flow.models import Worker, Task
 
 
@@ -37,6 +37,12 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
     context_object_name = "worker"
     template_name = "worker/worker_details.html"
+
+class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Worker
+    template_name = "worker/worker_form.html"
+    form_class = WorkerUpdateForm
+    success_url = reverse_lazy("scope_flow:home-page")
 
 
 class TaskListView(LoginRequiredMixin, ListView):

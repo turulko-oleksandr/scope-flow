@@ -51,3 +51,39 @@ class WorkerCreateForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class WorkerUpdateForm(forms.ModelForm):
+    username = forms.RegexField(regex=r'^[\w.@+-]+$')
+    email = forms.EmailField()
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput(), required=False)
+    password_confirm = forms.CharField(widget=forms.PasswordInput(), required=False)
+
+    class Meta:
+        model = Worker
+        fields = ["username", "email", "first_name", "last_name", "position"]
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get("password_confirm")
+
+        if password or password_confirm:
+            if password != password_confirm:
+                self.add_error("password_confirm", "Passwords don't match.")
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data.get("password")
+
+        if password:
+            user.set_password(password)
+
+        if commit:
+            user.save()
+        return user
