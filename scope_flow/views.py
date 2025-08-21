@@ -41,11 +41,14 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
-    queryset = (Task.objects.all()
-                .prefetch_related('assignees')
-                .order_by('deadline'))
     template_name = 'task/task_list.html'
     context_object_name = 'tasks'
+
+    def get_queryset(self):
+        worker_id = self.kwargs.get("pk")
+        return (Task.objects.
+                prefetch_related("assignees").
+                filter(assignees__id=worker_id))
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
