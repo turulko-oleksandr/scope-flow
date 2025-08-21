@@ -1,5 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -43,6 +44,20 @@ class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "worker/worker_form.html"
     form_class = WorkerUpdateForm
     success_url = reverse_lazy("scope_flow:home-page")
+
+
+class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Worker
+    context_object_name = "worker"
+    template_name = "worker/worker_confirm_delete.html"
+    success_url = reverse_lazy("scope_flow:home-page")
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj != self.request.user:
+            raise PermissionDenied("You are not the owner of this worker.")
+        return obj
+
 
 
 class TaskListView(LoginRequiredMixin, ListView):
