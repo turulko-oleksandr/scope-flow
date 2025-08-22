@@ -10,5 +10,7 @@
     {% for worker in worker_list %}
       <li><a href={% url 'scope_flow:worker-detail' pk=worker.id %}>{{ worker.username }} </a></li>
     {% endfor %}
+
+      {% include "includes/pagination.html" %}
   </ul>
 {% endblock %}

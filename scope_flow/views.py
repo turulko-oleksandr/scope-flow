@@ -32,6 +32,7 @@ class WorkerCreateView(CreateView):
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     template_name = "worker/worker_list.html"
+    paginate_by = 10
 
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
@@ -59,12 +60,11 @@ class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
         return obj
 
 
-
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'task/task_list.html'
     context_object_name = 'tasks'
-
+    paginate_by = 5
     def get_queryset(self):
         worker_id = self.kwargs.get("pk")
         return (Task.objects.
