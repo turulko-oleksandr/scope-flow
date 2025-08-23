@@ -82,13 +82,25 @@
               </td>
 
               <!-- Actions -->
+
               <td class="align-middle text-center">
-                <a href="{% url 'scope_flow:task-update' pk=task.pk %}" title="Edit">
+                {% if not task.is_completed %}
+                  <form action="{% url 'scope_flow:task-submit' pk=task.pk %}" method="post" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-success border-0 p-0" title="Mark as Done">
+                          <i class="fas fa-check-circle"></i>
+                      </button>
+                  </form>
+                   <a href="{% url 'scope_flow:task-update' pk=task.pk %}" title="Edit">
                   <i class="fas fa-edit text-primary me-3"></i>
                 </a>
                 <a href="{% url 'scope_flow:task-delete' pk=task.pk %}" title="Delete">
                   <i class="fas fa-trash-alt text-danger"></i>
                 </a>
+                {% elif task.deadline %}
+                  <i>Done</i>
+                {% endif %}
+
               </td>
             </tr>
           {% endfor %}
@@ -96,7 +108,6 @@
           <tr>
             <td colspan="4" class="text-center text-muted">There are no tasks.</td>
           </tr>
-
         {% endif %}
         </tbody>
       </table>
