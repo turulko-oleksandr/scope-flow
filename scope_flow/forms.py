@@ -4,20 +4,60 @@ from django.contrib.auth import get_user_model
 
 from scope_flow.models import Task, Worker
 
+from django import forms
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from .models import Task
 
 class TaskForm(forms.ModelForm):
     assignees = forms.ModelMultipleChoiceField(
-        queryset=get_user_model().objects.all().filter(),
-        widget=forms.CheckboxSelectMultiple,
+        queryset=get_user_model().objects.all(),
+        widget=forms.SelectMultiple(attrs={
+            "class": "form-control selectpicker",
+            "data-live-search": "true"
+        }),
+        required=False,
+        label="Виконавці"
+    )
 
-        required=False)
-    description = forms.Textarea()
-    deadline = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS,
-                               widget=forms.DateInput(attrs={'type': 'date'}))
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={
+            "class": "form-control",
+            "rows": 4,
+            "placeholder": "Опишіть завдання..."
+        }),
+        label="Опис"
+    )
+
+    deadline = forms.DateField(
+        input_formats=settings.DATE_INPUT_FORMATS,
+        widget=forms.DateInput(attrs={
+            "type": "date",
+            "class": "form-control"
+        }),
+        label="Дедлайн"
+    )
 
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ["name", "description", "deadline", "priority", "task_type", "assignees"]
+        widgets = {
+            "name": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Назва завдання"
+            }),
+            "priority": forms.Select(attrs={
+                "class": "form-select"
+            }),
+            "task_type": forms.Select(attrs={
+                "class": "form-select"
+            }),
+        }
+        labels = {
+            "name": "Назва",
+            "priority": "Пріоритет",
+            "task_type": "Тип завдання"
+        }
 
 
 class WorkerCreateForm(forms.ModelForm):

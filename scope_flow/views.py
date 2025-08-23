@@ -69,6 +69,10 @@ class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'task/task_list.html'
     context_object_name = 'tasks'
+
+    class Meta:
+        ordering = ['-priority']
+
     paginate_by = 5
     def get_queryset(self):
         worker_id = self.kwargs.get("pk")
@@ -77,18 +81,23 @@ class TaskListView(LoginRequiredMixin, ListView):
                 filter(assignees__id=worker_id))
 
 
+
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task/task_form.html'
-    success_url = reverse_lazy('scope_flow:task-list')
+
+    def success_url(self):
+        return reverse_lazy('scope_flow:task-list', kwargs={'pk': self.request.user.id})
 
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "task/task_form.html"
-    success_url = reverse_lazy('scope_flow:task-list')
+
+    def success_url(self):
+        return reverse_lazy('scope_flow:task-list', kwargs={'pk': self.request.user.id})
 
 
 class TaskSubmitView(LoginRequiredMixin, View):
