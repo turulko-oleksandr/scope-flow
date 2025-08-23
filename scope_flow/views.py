@@ -102,4 +102,5 @@ class TaskSubmitView(LoginRequiredMixin, View):
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     template_name = "task/task_confirm_delete.html"
-    success_url = reverse_lazy('scope_flow:task-list')
+    def get_success_url(self):
+        return reverse_lazy('scope_flow:task-list', kwargs={'pk': self.request.user.pk})
