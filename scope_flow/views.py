@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.views.generic import ListView, CreateView
 
@@ -87,7 +87,7 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = TaskForm
     template_name = 'task/task_form.html'
 
-    def success_url(self):
+    def get_success_url(self):
         return reverse_lazy('scope_flow:task-list', kwargs={'pk': self.request.user.id})
 
 
@@ -96,7 +96,7 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = TaskForm
     template_name = "task/task_form.html"
 
-    def success_url(self):
+    def get_success_url(self):
         return reverse_lazy('scope_flow:task-list', kwargs={'pk': self.request.user.id})
 
 
