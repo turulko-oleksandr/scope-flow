@@ -34,7 +34,7 @@
                 <tr>
                   <!-- Task name -->
                   <td>
-                    <a href="{% url 'scope_flow:task-update' pk=task.pk %}" class="fw-semibold text-decoration-none">
+                    <a href="{% url 'scope_flow:task-detail' pk=task.pk %}" class="fw-semibold text-decoration-none">
                       {{ task.name }}
                     </a>
                   </td>
@@ -68,12 +68,12 @@
                       <span class="badge bg-success">Completed</span>
                     {% else %}
                       {% now "Y-m-d" as today %}
-                      {% if task.deadline|date:"Y-m-d" == today %}
+                      {% if task.deadline|date:"Y-m-d" == today|date:"Y-m-d" %}
                         <span class="badge bg-warning text-dark">Due Today</span>
                       {% elif task.deadline < today %}
-                        <span class="badge bg-danger">Overdue</span>
+                        <span class="badge bg-danger">Close</span>
                       {% else %}
-                        <span class="badge bg-success">In Progress</span>
+                        <span class="badge bg-danger">Overdue</span>
                       {% endif %}
                     {% endif %}
                   </td>

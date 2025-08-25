@@ -18,12 +18,15 @@
         </thead>
         <tbody>
           {% for worker in worker_list %}
-            <tr>
+            <tr {% if worker == request.user %} class="table-primary" {% endif %}>
               <th scope="row">{{ forloop.counter }}</th>
               <td>
                 <a href="{% url 'scope_flow:worker-detail' pk=worker.id %}">
                   {{ worker.username }}
                 </a>
+                {% if worker == request.user %}
+                  <span class="badge bg-success ms-2">you</span>
+                {% endif %}
               </td>
               <td>{{ worker.first_name }} {{ worker.last_name }}</td>
               <td>{{ worker.email }}</td>

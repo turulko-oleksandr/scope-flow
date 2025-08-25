@@ -23,7 +23,7 @@ from scope_flow.views import (home_page,
                               TaskCreateView,
                               WorkerDetailView,
                               WorkerUpdateView,
-                              WorkerDeleteView, TaskSubmitView)
+                              WorkerDeleteView, TaskSubmitView, TaskDetailView)
 
 urlpatterns = [
     path("", home_page, name="home-page"),
@@ -36,7 +36,8 @@ urlpatterns = [
     path("workers/<int:pk>/delete",
          WorkerDeleteView.as_view(), name="worker-delete"),
 
-    path("tasks/<int:pk>/", TaskListView.as_view(), name="task-list"),
+    path("workers/<int:pk>/tasks/", TaskListView.as_view(), name="task-list"),
+    path("tasks/<int:pk>/detail/", TaskDetailView.as_view(), name="task-detail"),
     path('tasks/create/',
          TaskCreateView.as_view(), name='task-create'),
     path('tasks/<int:pk>/update/',

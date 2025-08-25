@@ -13,6 +13,7 @@
           <p><strong>👤 Full name:</strong> {{ worker.get_full_name }}</p>
           <p><strong>💼 Position:</strong> {{ worker.position }}</p>
 
+          {% if request.user == worker %}
           <div class="mt-4 text-center">
             <a href="{% url 'scope_flow:worker-update' worker.id %}" class="btn btn-warning btn-lg me-2">
               <i class="bi bi-pencil-square"></i> Edit
@@ -21,6 +22,7 @@
               <i class="bi bi-trash"></i> Delete
             </a>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>

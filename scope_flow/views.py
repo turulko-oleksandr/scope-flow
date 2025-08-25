@@ -40,7 +40,7 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
     context_object_name = "worker"
-    template_name = "worker/worker_details.html"
+    template_name = "worker/worker_detail.html"
 
 
 class OwnerRequiredMixin:
@@ -80,6 +80,11 @@ class TaskListView(LoginRequiredMixin, ListView):
                 prefetch_related("assignees").
                 filter(assignees__id=worker_id))
 
+
+class TaskDetailView(generic.DetailView):
+    model = Task
+    template_name = "task/task_detail.html"
+    context_object_name = "task"
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
