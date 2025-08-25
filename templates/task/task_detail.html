@@ -7,7 +7,7 @@
       <div class="card shadow-lg border-0 rounded-4">
         <div class="card-body p-5">
           <h2 class="card-title text-center mb-4 text-primary fw-bold">
-            <i class="bi bi-clipboard-check"></i> {{ task.title }}
+            <i class="bi bi-clipboard-check"></i> {{ task.name }}
           </h2>
 
           <div class="mb-4">
@@ -21,7 +21,7 @@
               <span class="badge
                 {% if task.is_completed %} bg-success
                 {% else %} bg-secondary {% endif %}">
-                {{ task.status }}
+                {% if task.is_completed %} Completed {% else %} Pending {% endif %}
               </span>
             </div>
             <div class="col-md-6">
@@ -39,6 +39,23 @@
           <div class="row text-muted small mb-4">
             <div class="col-md-6">
               <i class="bi bi-calendar-plus"></i> Deadline: {{ task.deadline|date:"M d, Y" }}
+            </div>
+            <div class="col-md-6">
+              <i class="bi bi-folder-fill"></i> Task type:
+              <span class="fw-semibold">{{ task.task_type.name }}</span>
+            </div>
+          </div>
+
+          <div class="row text-muted small mb-4">
+            <div class="col-md-12">
+              <i class="bi bi-person-badge"></i> Author:
+              {% if task.author %}
+                <a href="{% url 'scope_flow:worker-detail' task.author.id %}">
+                  {{ task.author.username }}
+                </a>
+              {% else %}
+                <em class="text-muted">Not specified</em>
+              {% endif %}
             </div>
           </div>
 
