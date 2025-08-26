@@ -37,13 +37,15 @@ urlpatterns = [
          WorkerDeleteView.as_view(), name="worker-delete"),
 
     path("workers/<int:pk>/tasks/", TaskListView.as_view(), name="task-list"),
-    path("tasks/<int:pk>/detail/", TaskDetailView.as_view(), name="task-detail"),
+    path("tasks/<int:pk>/detail/",
+         TaskDetailView.as_view(), name="task-detail"),
     path('tasks/create/',
          TaskCreateView.as_view(), name='task-create'),
     path('tasks/<int:pk>/update/',
          TaskUpdateView.as_view(), name='task-update'),
     path('tasks/submit/<int:pk>/',
-             TaskSubmitView.as_view(), name='task-submit'),
+         TaskSubmitView.as_view(),
+         name='task-submit'),
     path('tasks/<int:pk>/delete/',
          TaskDeleteView.as_view(), name='task-delete'),
 ]

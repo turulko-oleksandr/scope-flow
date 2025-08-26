@@ -34,7 +34,9 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ["name", "description", "deadline", "priority", "task_type", "assignees"]
+        fields = ["name", "description",
+                  "deadline", "priority",
+                  "task_type", "assignees"]
         widgets = {
             "name": forms.TextInput(attrs={
                 "class": "form-control",
@@ -93,7 +95,8 @@ class WorkerUpdateForm(forms.ModelForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     password = forms.CharField(widget=forms.PasswordInput(), required=False)
-    password_confirm = forms.CharField(widget=forms.PasswordInput(), required=False)
+    password_confirm = forms.CharField(widget=forms.PasswordInput(),
+                                       required=False)
 
     class Meta:
         model = Worker

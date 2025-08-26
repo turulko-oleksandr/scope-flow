@@ -1,4 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -44,9 +43,13 @@ class WorkerViewsTests(TestCase):
         self.assertContains(response, "Developer")
 
     def test_worker_update_view_owner_only(self):
-        other_user = Worker.objects.create_user(username="other", password="pass")
-        self.client.login(username="taskuser", password="password")
-        response = self.client.get(reverse("scope_flow:worker-update", kwargs={"pk": other_user.pk}))
+        other_user = Worker.objects.create_user(username="other",
+                                                password="pass")
+        self.client.login(username="taskuser",
+                          password="password")
+        response = self.client.get(
+            reverse("scope_flow:worker-update",
+                    kwargs={"pk": other_user.pk}))
         self.assertEqual(response.status_code, 403)  # перевіряємо саме статус
 
 
@@ -74,13 +77,15 @@ class TaskViewsTests(TestCase):
         self.task.assignees.add(self.user)
 
     def test_task_list_view_only_user_tasks(self):
-        response = self.client.get(reverse("scope_flow:task-list", kwargs={"pk": self.user.pk}))
+        response = self.client.get(reverse("scope_flow:task-list",
+                                           kwargs={"pk": self.user.pk}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Fix login bug")
 
     def test_task_detail_view(self):
         response = self.client.get(
-            reverse("scope_flow:task-detail", kwargs={"pk": self.task.pk})
+            reverse("scope_flow:task-detail",
+                    kwargs={"pk": self.task.pk})
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Fix login bug")
@@ -122,12 +127,14 @@ class TaskViewsTests(TestCase):
         self.assertEqual(self.task.priority, "Urgent")
 
     def test_task_submit_view_marks_completed(self):
-        response = self.client.post(reverse("scope_flow:task-submit", kwargs={"pk": self.task.pk}))
+        response = self.client.post(reverse("scope_flow:task-submit",
+                                            kwargs={"pk": self.task.pk}))
         self.assertEqual(response.status_code, 302)
         self.task.refresh_from_db()
         self.assertTrue(self.task.is_completed)
 
     def test_task_delete_view(self):
-        response = self.client.post(reverse("scope_flow:task-delete", kwargs={"pk": self.task.pk}))
+        response = self.client.post(reverse("scope_flow:task-delete",
+                                            kwargs={"pk": self.task.pk}))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Task.objects.filter(pk=self.task.pk).exists())
