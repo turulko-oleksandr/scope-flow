@@ -2,11 +2,24 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>Create a Task</h1>
+<h1>Create a Task</h1>
 
-  <form action="" method="post" novalidate>
+<form action="" method="post" novalidate>
     {% csrf_token %}
-    {{ form|crispy}}
-    <input type="submit" value="Submit">
-  </form>
+
+    {{ form.name|as_crispy_field }}
+    {{ form.description|as_crispy_field }}
+    {{ form.deadline|as_crispy_field }}
+    {{ form.priority|as_crispy_field }}
+    {{ form.task_type|as_crispy_field }}
+
+    <div class="mb-3">
+        <label class="form-label">{{ form.assignees.label }}</label>
+        <div class="assignees-checkbox-list">
+            {{ form.assignees }}
+        </div>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary">
+</form>
 {% endblock %}

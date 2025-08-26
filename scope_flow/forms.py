@@ -1,32 +1,26 @@
-from django import forms
-from django.conf import settings
-from django.contrib.auth import get_user_model
-
-from scope_flow.models import Task, Worker
+from scope_flow.models import Worker
 
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from .models import Task
 
+
 class TaskForm(forms.ModelForm):
     assignees = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
-        widget=forms.SelectMultiple(attrs={
-            "class": "form-control selectpicker",
-            "data-live-search": "true"
-        }),
+        widget=forms.CheckboxSelectMultiple,
         required=False,
-        label="Виконавці"
+        label="Assignees",
     )
 
     description = forms.CharField(
         widget=forms.Textarea(attrs={
             "class": "form-control",
             "rows": 4,
-            "placeholder": "Опишіть завдання..."
+            "placeholder": "Describe your task..."
         }),
-        label="Опис"
+        label="Description"
     )
 
     deadline = forms.DateField(
@@ -35,7 +29,7 @@ class TaskForm(forms.ModelForm):
             "type": "date",
             "class": "form-control"
         }),
-        label="Дедлайн"
+        label="Deadline"
     )
 
     class Meta:
@@ -44,7 +38,7 @@ class TaskForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={
                 "class": "form-control",
-                "placeholder": "Назва завдання"
+                "placeholder": "Task name"
             }),
             "priority": forms.Select(attrs={
                 "class": "form-select"
@@ -54,9 +48,9 @@ class TaskForm(forms.ModelForm):
             }),
         }
         labels = {
-            "name": "Назва",
-            "priority": "Пріоритет",
-            "task_type": "Тип завдання"
+            "name": "Name",
+            "priority": "Priority",
+            "task_type": "Task type"
         }
 
 
