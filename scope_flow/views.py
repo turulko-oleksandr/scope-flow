@@ -74,11 +74,17 @@ class TaskListView(LoginRequiredMixin, ListView):
         ordering = ['-priority']
 
     paginate_by = 5
+
     def get_queryset(self):
+        queryset = super().get_queryset()
+
         worker_id = self.kwargs.get("pk")
-        return (Task.objects.
-                prefetch_related("assignees").
-                filter(assignees__id=worker_id))
+        queryset = queryset.filter(assignees__id=worker_id)
+        name = self.request.GET.get('name')
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+
+        return queryset.order_by("-priority")
 
 
 class TaskDetailView(generic.DetailView):

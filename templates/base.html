@@ -17,7 +17,63 @@
 
   <main class="container py-4">
     {% block content %}
-      <h1 class="text-center text-primary fw-bold">Hello user</h1>
+      <h1 class="text-center text-primary fw-bold mb-4">Scope Flow: My Capstone Project</h1>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body p-5">
+        <p class="lead mb-4">
+          Welcome to the <b>Scope Flow</b> homepage! This project is the culmination of my hard work during my Python development course.
+          It's more than just an application; it's a showcase of my skills in building real-world web applications.
+        </p>
+
+        <h3 class="text-primary fw-bold mb-3">What is Scope Flow?</h3>
+        <p class="mb-4">
+          <b>Scope Flow</b> is a task management tool inspired by popular alternatives like Trello and ClickUp.
+          It's designed for small teams to efficiently organize workflows, create tasks, assign them to colleagues,
+          and track progress.
+        </p>
+
+        <h3 class="text-primary fw-bold mb-3">Key Technologies</h3>
+        <p class="mb-4">
+          I used modern and powerful technologies to build this project:
+        </p>
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item bg-light border-0">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            **Django**: A powerful Python framework for fast and secure backend development.
+          </li>
+          <li class="list-group-item bg-light border-0">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            **HTML/CSS/Bootstrap**: Creating a responsive and aesthetically pleasing user interface.
+          </li>
+          <li class="list-group-item bg-light border-0">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            **SQLite**: A reliable database management system for storing all project data.
+          </li>
+          <li class="list-group-item bg-light border-0">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            **ORM (Object-Relational Mapper)**: Efficiently interacting with the database without writing raw SQL queries.
+          </li>
+        </ul>
+
+        <h3 class="text-primary fw-bold mb-3">My Accomplishments</h3>
+        <p class="mb-4">
+          Building <b>Scope Flow</b> allowed me to solidify my knowledge of developing full-fledged web applications,
+          working with data models, handling user interactions (CRUD operations), and ensuring security.
+          This project marks a significant milestone in my professional training.
+        </p>
+
+        <div class="text-center mt-5">
+          <a href="{% url 'scope_flow:task-list' user.id %}" class="btn btn-primary btn-lg shadow-sm">
+            View My Tasks <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
     {% endblock %}
   </main>
 
