@@ -5,6 +5,7 @@ __pycache__/
 *.pyo
 
 # Virtual environment
+.env
 .env/
 venv/
 env/

@@ -1,5 +1,130 @@
-from django.shortcuts import render
+from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from django.views import generic
+from django.views.generic import ListView, CreateView
+from django.views import View
+from django.shortcuts import get_object_or_404
 
-# Create your views here.
+from .forms import TaskForm, WorkerCreateForm, WorkerUpdateForm
+from scope_flow.models import Worker, Task
+
+
 def home_page(request):
-    return render(request,"base.html")
+
+    if request.user.is_authenticated:
+        return redirect(reverse("scope_flow:task-list",
+                                kwargs={"pk": request.user.pk}))
+    return render(request, "base.html")
+
+
+class WorkerCreateView(CreateView):
+    model = Worker
+    form_class = WorkerCreateForm
+    template_name = "registration/register.html"
+    success_url = reverse_lazy("scope_flow:home-page")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        user = self.object
+        login(self.request, user)
+        return response
+
+
+class WorkerListView(LoginRequiredMixin, generic.ListView):
+    model = Worker
+    template_name = "worker/worker_list.html"
+    paginate_by = 10
+
+
+class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Worker
+    context_object_name = "worker"
+    template_name = "worker/worker_detail.html"
+
+
+class OwnerRequiredMixin:
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj != self.request.user:
+            raise PermissionDenied("You are not the owner of this worker.")
+        return obj
+
+
+class WorkerUpdateView(LoginRequiredMixin,
+                       OwnerRequiredMixin,
+                       generic.UpdateView):
+    model = Worker
+    template_name = "worker/worker_form.html"
+    form_class = WorkerUpdateForm
+    success_url = reverse_lazy("scope_flow:home-page")
+
+
+class WorkerDeleteView(LoginRequiredMixin,
+                       OwnerRequiredMixin,
+                       generic.DeleteView):
+    model = Worker
+    context_object_name = "worker"
+    template_name = "worker/worker_confirm_delete.html"
+    success_url = reverse_lazy("scope_flow:home-page")
+
+
+class TaskListView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = 'task/task_list.html'
+    context_object_name = 'tasks'
+    paginate_by = 5
+
+    def get_queryset(self):
+        worker_id = self.kwargs.get("pk")
+        queryset = (Task.objects.prefetch_related("assignees")
+                    .filter(assignees__id=worker_id))
+        name = self.request.GET.get('name')
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+        return queryset.order_by("-priority")
+
+
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Task
+    template_name = "task/task_detail.html"
+    context_object_name = "task"
+
+
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task/task_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('scope_flow:task-list',
+                            kwargs={'pk': self.request.user.id})
+
+
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task/task_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy('scope_flow:task-list',
+                            kwargs={'pk': self.request.user.id})
+
+
+class TaskSubmitView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        task.is_completed = True
+        task.save()
+        return redirect('scope_flow:task-list', pk=request.user.pk)
+
+
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Task
+    template_name = "task/task_confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy('scope_flow:task-list',
+                            kwargs={'pk': self.request.user.pk})
