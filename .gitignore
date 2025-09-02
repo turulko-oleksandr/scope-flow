@@ -13,6 +13,9 @@ env/
 # Database files
 db.sqlite3
 
+dump.json
+dump.*
+
 # Media and static files (if not served by a separate service)
 media/
 static_collected/
