@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'scope_flow_service.urls'
@@ -127,7 +128,7 @@ CRISPY_TEMPLATE_PACK ='bootstrap4'
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = 'staticfiles/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
