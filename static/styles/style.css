@@ -1,0 +1,19 @@
+body {
+    margin: 0 0;
+}
+.assignees-checkbox-list {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fafafa;
+}
+.assignees-checkbox-list ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.assignees-checkbox-list li {
+    margin-bottom: 5px;
+}

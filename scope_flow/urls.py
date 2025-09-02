@@ -14,11 +14,40 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
-from scope_flow.views import home_page
+from scope_flow.views import (home_page,
+                              WorkerListView,
+                              TaskListView,
+                              TaskUpdateView,
+                              TaskDeleteView,
+                              TaskCreateView,
+                              WorkerDetailView,
+                              WorkerUpdateView,
+                              WorkerDeleteView, TaskSubmitView, TaskDetailView)
 
 urlpatterns = [
     path("", home_page, name="home-page"),
+    path("workers/",
+         WorkerListView.as_view(), name="worker-list"),
+    path("workers/<int:pk>/",
+         WorkerDetailView.as_view(), name="worker-detail"),
+    path("workers/<int:pk>/update/",
+         WorkerUpdateView.as_view(), name="worker-update"),
+    path("workers/<int:pk>/delete/",
+         WorkerDeleteView.as_view(), name="worker-delete"),
+
+    path("workers/<int:pk>/tasks/", TaskListView.as_view(), name="task-list"),
+    path("tasks/<int:pk>/detail/",
+         TaskDetailView.as_view(), name="task-detail"),
+    path('tasks/create/',
+         TaskCreateView.as_view(), name='task-create'),
+    path('tasks/<int:pk>/update/',
+         TaskUpdateView.as_view(), name='task-update'),
+    path('tasks/submit/<int:pk>/',
+         TaskSubmitView.as_view(),
+         name='task-submit'),
+    path('tasks/<int:pk>/delete/',
+         TaskDeleteView.as_view(), name='task-delete'),
 ]
 
+app_name = "scope_flow"
