@@ -1,12 +1,20 @@
 # Scope Flow
 
-**Scope Flow** is a learning Django project focused on practicing full-stack development: models, authentication, CRUD operations, clean UI, and well-structured code.  
+**Scope Flow** is a learning Django project focused on practicing full-stack development:  
+models, authentication, CRUD operations, clean UI, and well-structured code.  
 
 👉 **Live Demo:** [scope-flow on Render](https://scope-flow.onrender.com/)
 
 ---
 
-##  Project Goal
+## Test User Credentials
+
+- **Login:** `worker`  
+- **Password:** `worker`
+
+---
+
+##  Project Goal 
 
 This project was built as a learning case — to implement basic CRUD functionality, authentication, user (worker) and task management, and task types, while also working on clean UI, solid architecture, and Django best practices.  
 See [Pull Request #2](https://github.com/turulko-oleksandr/scope-flow/pull/2).
