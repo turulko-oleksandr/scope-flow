@@ -5,21 +5,18 @@ models, authentication, CRUD operations, clean UI, and well-structured code.
 
 👉 **Live Demo:** [scope-flow on Render](https://scope-flow.onrender.com/)
 
----
-
 ## Test User Credentials
 
 - **Login:** `worker`  
 - **Password:** `worker`
 
----
+
 
 ##  Project Goal 
 
 This project was built as a learning case — to implement basic CRUD functionality, authentication, user (worker) and task management, and task types, while also working on clean UI, solid architecture, and Django best practices.  
 See [Pull Request #2](https://github.com/turulko-oleksandr/scope-flow/pull/2).
 
----
 
 ##  Features
 
@@ -31,7 +28,6 @@ See [Pull Request #2](https://github.com/turulko-oleksandr/scope-flow/pull/2).
 - **Tests**: basic view tests for functionality checks  
 - **.env**: sensitive data (e.g., SECRET_KEY) stored in `.env` (ignored by Git)  
 
----
 ## Data structure
 
 The project was built based on the following database design:  
@@ -45,7 +41,7 @@ It consists of four main models:
 - **Task** – stores information about assigned tasks.  
 - **Task Type** – categorizes tasks into different types.  
 
-##  UI Screenshots
+###  UI Screenshots
 
 - Home Page
 
@@ -64,7 +60,6 @@ It consists of four main models:
 ![WorkerList Screenshot](static/images/screenshots/worker_list.png)
 
 
----
 
 ##  Quick Start
 
